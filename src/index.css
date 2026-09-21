@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-color: #F8FAF6;
+    --card-bg: rgba(255, 255, 255, 0.88);
+    --border-color: rgba(22, 163, 74, 0.12);
+  }
+
+  body {
+    background-color: var(--bg-color);
+    color: #1E293B;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F1F5E9;
+}
+::-webkit-scrollbar-thumb {
+  background: #A7F3D0;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #16A34A;
+}
+
+/* Glassmorphism utilities */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(22, 163, 74, 0.12);
+  box-shadow: 0 4px 20px -2px rgba(12, 43, 29, 0.05);
+}
+
+.glass-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 246, 0.85) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(22, 163, 74, 0.14);
+  box-shadow: 0 10px 30px -5px rgba(22, 163, 74, 0.06);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  border-color: rgba(22, 163, 74, 0.35);
+  box-shadow: 0 18px 40px -10px rgba(22, 163, 74, 0.16);
+  transform: translateY(-4px);
+}
+
+/* Background Grids & Dots */
+.bg-grid-pattern {
+  background-size: 36px 36px;
+  background-image: 
+    linear-gradient(to right, rgba(22, 163, 74, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(22, 163, 74, 0.05) 1px, transparent 1px);
+}
+
+.bg-dot-pattern {
+  background-image: radial-gradient(rgba(22, 163, 74, 0.15) 1.2px, transparent 1.2px);
+  background-size: 20px 20px;
+}
+
+/* Gradient Text matching reference 10K Green & Forest */
+.text-gradient-green {
+  background: linear-gradient(135deg, #15803D 0%, #16A34A 50%, #22C55E 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-forest {
+  background: linear-gradient(135deg, #0C2B1D 0%, #166534 50%, #15803D 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #B45309 0%, #D97706 50%, #F59E0B 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Botanical Glow */
+.botanical-glow {
+  background: radial-gradient(circle, rgba(134, 239, 172, 0.35) 0%, rgba(240, 253, 244, 0) 70%);
+}
+
+/* Custom Cursor Hide on Touch */
+@media (hover: none) and (pointer: coarse) {
+  .custom-cursor {
+    display: none !important;
+  }
+}
