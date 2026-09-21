@@ -23,7 +23,7 @@ export const Footer = () => {
             <span className="text-xs font-semibold text-emerald-700">UX/UI Designer</span>
           </div>
           <p className="text-xs text-slate-500 text-center md:text-left max-w-sm">
-            Grateful for the journey 💚 • Designed with user empathy, Figma systems, and modern motion.
+            Designed with user empathy, Figma systems, and modern motion.
           </p>
         </div>
 

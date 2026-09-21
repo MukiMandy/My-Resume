@@ -38,19 +38,7 @@ export const Hero = () => {
         {/* Left Column: Headlines & Action CTAs */}
         <div className="lg:col-span-6 flex flex-col items-start text-left">
           
-          {/* Status Badge from Reference Theme */}
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-300 text-xs font-semibold text-emerald-900 shadow-sm mb-6"
-          >
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-600"></span>
-            </span>
-            <span className="font-medium text-emerald-800">Grateful for the journey 💚 • Open for UX/UI Roles</span>
-          </motion.div>
+
 
           {/* Name & Dynamic Headline */}
           <motion.div
