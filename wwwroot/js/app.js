@@ -3,92 +3,6 @@
 // Connected with ASP.NET Core Backend
 // ==========================================================================
 
-class AudioEngine {
-  constructor() {
-    this.ctx = null;
-    this.enabled = true;
-  }
-
-  init() {
-    if (!this.ctx && typeof window !== 'undefined') {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      if (AudioContext) {
-        this.ctx = new AudioContext();
-      }
-    }
-    if (this.ctx && this.ctx.state === 'suspended') {
-      this.ctx.resume();
-    }
-  }
-
-  playHover() {
-    if (!this.enabled) return;
-    try {
-      this.init();
-      if (!this.ctx) return;
-      const osc = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(520, this.ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(880, this.ctx.currentTime + 0.04);
-      gain.gain.setValueAtTime(0.012, this.ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.04);
-      osc.connect(gain);
-      gain.connect(this.ctx.destination);
-      osc.start();
-      osc.stop(this.ctx.currentTime + 0.04);
-    } catch (_) {}
-  }
-
-  playClick() {
-    if (!this.enabled) return;
-    try {
-      this.init();
-      if (!this.ctx) return;
-      const osc = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(320, this.ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(140, this.ctx.currentTime + 0.08);
-      gain.gain.setValueAtTime(0.05, this.ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.08);
-      osc.connect(gain);
-      gain.connect(this.ctx.destination);
-      osc.start();
-      osc.stop(this.ctx.currentTime + 0.08);
-    } catch (_) {}
-  }
-
-  playSuccess() {
-    if (!this.enabled) return;
-    try {
-      this.init();
-      if (!this.ctx) return;
-      const now = this.ctx.currentTime;
-      const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
-      notes.forEach((freq, i) => {
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(freq, now + i * 0.06);
-        gain.gain.setValueAtTime(0.03, now + i * 0.06);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.06 + 0.22);
-        osc.connect(gain);
-        gain.connect(this.ctx.destination);
-        osc.start(now + i * 0.06);
-        osc.stop(now + i * 0.06 + 0.22);
-      });
-    } catch (_) {}
-  }
-
-  toggle() {
-    this.enabled = !this.enabled;
-    return this.enabled;
-  }
-}
-
-const audio = new AudioEngine();
-
 // Confetti Utility (Lightweight Canvas Particle Explosion)
 function fireConfetti() {
   const canvas = document.createElement('canvas');
@@ -264,7 +178,6 @@ function initCustomCursor() {
   document.querySelectorAll('button, a, input, textarea, .interactive').forEach(el => {
     el.addEventListener('mouseenter', () => {
       ring.classList.add('hovered');
-      audio.playHover();
     });
     el.addEventListener('mouseleave', () => ring.classList.remove('hovered'));
   });
@@ -327,7 +240,6 @@ const caseStudies = {
 };
 
 function openCaseStudy(id) {
-  audio.playClick();
   const data = caseStudies[id];
   if (!data) return;
 
@@ -345,7 +257,6 @@ function openCaseStudy(id) {
 }
 
 function closeCaseStudy() {
-  audio.playClick();
   const modal = document.getElementById('case-study-modal');
   modal.classList.remove('active');
 }
@@ -357,7 +268,6 @@ function initProjectFilters() {
 
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      audio.playClick();
       filterBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
@@ -382,7 +292,6 @@ function initContactForm() {
 
   form.addEventListener('submit', async e => {
     e.preventDefault();
-    audio.playSuccess();
     fireConfetti();
 
     const name = document.getElementById('contact-name').value;
@@ -408,7 +317,6 @@ function initContactForm() {
 
 // Copy Email Utility
 function copyEmail() {
-  audio.playSuccess();
   navigator.clipboard.writeText('Srimukesh25@gmail.com');
   const btnText = document.getElementById('copy-email-text');
   if (btnText) {
@@ -419,19 +327,6 @@ function copyEmail() {
   }
 }
 
-// Audio Button Toggle
-function initAudioToggle() {
-  const btn = document.getElementById('audio-toggle-btn');
-  if (!btn) return;
-  btn.addEventListener('click', () => {
-    const enabled = audio.toggle();
-    btn.innerHTML = enabled 
-      ? `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-600"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>`
-      : `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-400"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>`;
-    if (enabled) audio.playSuccess();
-  });
-}
-
 // Initialize on DOM Ready
 document.addEventListener('DOMContentLoaded', () => {
   initParticles();
@@ -439,5 +334,4 @@ document.addEventListener('DOMContentLoaded', () => {
   initRoleTyper();
   initProjectFilters();
   initContactForm();
-  initAudioToggle();
 });

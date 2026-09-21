@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Volume2, 
-  VolumeX, 
   Menu, 
   X, 
   Sparkles,
   ArrowRight
 } from 'lucide-react';
-import { useTheme } from '../../context/ThemeContext';
-import { sounds } from '../../utils/soundEffects';
 import { personalInfo } from '../../data/portfolioData';
 
 const navLinks = [
@@ -25,7 +21,6 @@ export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { soundEnabled, toggleSound } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -52,7 +47,6 @@ export const Navbar = () => {
   }, []);
 
   const handleNavClick = (href) => {
-    sounds.playClick();
     setMobileMenuOpen(false);
     const target = document.querySelector(href);
     if (target) {
@@ -75,8 +69,6 @@ export const Navbar = () => {
         {/* Brand Identity */}
         <a
           href="#"
-          onMouseEnter={() => sounds.playHover()}
-          onClick={() => sounds.playClick()}
           className="group flex items-center gap-3"
         >
           <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 via-green-500 to-lime-400 p-[1px] shadow-sm group-hover:shadow-emerald-500/30 transition-all duration-300">
@@ -105,7 +97,6 @@ export const Navbar = () => {
               <a
                 key={link.name}
                 href={link.href}
-                onMouseEnter={() => sounds.playHover()}
                 onClick={(e) => {
                   e.preventDefault();
                   handleNavClick(link.href);
@@ -129,27 +120,11 @@ export const Navbar = () => {
           })}
         </nav>
 
-        {/* Right Controls: Sound Toggle & Hire Me CTA (Theme button removed) */}
+        {/* Right Controls: Hire Me CTA */}
         <div className="flex items-center gap-2.5">
-          {/* Sound Toggle */}
-          <button
-            onClick={toggleSound}
-            onMouseEnter={() => sounds.playHover()}
-            aria-label="Toggle UI Sound Effects"
-            className="p-2.5 rounded-xl bg-white/80 border border-emerald-600/15 text-forest-800 hover:text-emerald-600 hover:border-emerald-500/40 shadow-sm transition-all"
-            title={soundEnabled ? 'Mute UI sounds' : 'Enable UI sounds'}
-          >
-            {soundEnabled ? (
-              <Volume2 className="w-4 h-4 text-emerald-600 animate-pulse" />
-            ) : (
-              <VolumeX className="w-4 h-4 text-slate-400" />
-            )}
-          </button>
-
           {/* Hire Me CTA */}
           <a
             href="#contact"
-            onMouseEnter={() => sounds.playHover()}
             onClick={(e) => {
               e.preventDefault();
               handleNavClick('#contact');
@@ -162,10 +137,7 @@ export const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <button
-            onClick={() => {
-              sounds.playClick();
-              setMobileMenuOpen(!mobileMenuOpen);
-            }}
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="md:hidden p-2.5 rounded-xl bg-white/80 border border-emerald-600/15 text-forest-900 hover:text-emerald-600 shadow-sm"
             aria-label="Toggle navigation menu"
           >
