@@ -150,7 +150,7 @@ function initParticles() {
   render();
 }
 
-// Custom Physics Cursor
+// Custom Physics Cursor (Hardware accelerated lerp)
 function initCustomCursor() {
   const dot = document.querySelector('.custom-cursor-dot');
   const ring = document.querySelector('.custom-cursor-ring');
@@ -158,29 +158,32 @@ function initCustomCursor() {
 
   let mouseX = -100, mouseY = -100;
   let ringX = -100, ringY = -100;
+  let isHovered = false;
 
   window.addEventListener('mousemove', e => {
     mouseX = e.clientX;
     mouseY = e.clientY;
-    dot.style.left = `${mouseX}px`;
-    dot.style.top = `${mouseY}px`;
-  });
+    dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+  }, { passive: true });
+
+  window.addEventListener('mouseover', e => {
+    const target = e.target;
+    if (!target) return;
+    isHovered = Boolean(target.closest('button, a, input, textarea, select, [role="button"], .interactive'));
+    if (isHovered) {
+      ring.classList.add('hovered');
+    } else {
+      ring.classList.remove('hovered');
+    }
+  }, { passive: true });
 
   function loop() {
-    ringX += (mouseX - ringX) * 0.18;
-    ringY += (mouseY - ringY) * 0.18;
-    ring.style.left = `${ringX}px`;
-    ring.style.top = `${ringY}px`;
+    ringX += (mouseX - ringX) * 0.2;
+    ringY += (mouseY - ringY) * 0.2;
+    ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
     requestAnimationFrame(loop);
   }
   loop();
-
-  document.querySelectorAll('button, a, input, textarea, .interactive').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      ring.classList.add('hovered');
-    });
-    el.addEventListener('mouseleave', () => ring.classList.remove('hovered'));
-  });
 }
 
 // Rotating Role Typer
